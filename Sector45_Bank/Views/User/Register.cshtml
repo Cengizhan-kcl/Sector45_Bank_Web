@@ -1,0 +1,99 @@
+﻿@model Sector45_Bank.Models.Customer
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/Content/RegisterCSS.css" rel="stylesheet" />
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>Thank you for choosing our bank</p>
+                </div>
+                <form action="~/Controllers/User/Register" method="post">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h5><font color="red">@ViewBag.message</font></h5>
+                    <div class="form-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Your Name *" value="" />*@
+                                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @type = "text", @onkeypress = "return event.charCode>= 65 &&event.charCode<= 90 ||event.charCode>= 97 &&event.charCode<= 122||event.charCode==231||event.charCode==305||event.charCode==287||event.charCode==246||event.charCode==351||event.charCode==252||event.charCode==199||event.charCode==304||event.charCode==214||event.charCode==350||event.charCode==220", @placeholder = "Name", @maxlength = "20", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.name, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Phone Number *" value="" />*@
+                                    @Html.EditorFor(model => model.surname, new { htmlAttributes = new { @type = "text", @onkeypress = "return event.charCode>= 65 &&event.charCode<= 90 ||event.charCode>= 97 &&event.charCode<= 122||event.charCode==231||event.charCode==305||event.charCode==287||event.charCode==246||event.charCode==351||event.charCode==252||event.charCode==199||event.charCode==304||event.charCode==214||event.charCode==350||event.charCode==220", @placeholder = "Surname", @maxlength = "20", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.surname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Your Password *" value="" />*@
+                                    @Html.EditorFor(model => model.TCKN, new { htmlAttributes = new { @onkeypress = "return event.charCode>= 48 &&event.charCode<= 57", @maxlength = "11", @type = "text", @placeholder = "TC no", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.TCKN, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Confirm Password *" value="" />*@
+                                    @Html.EditorFor(model => model.dateOfBirth, new { htmlAttributes = new { @type = "date", @placeholder = "Date Of Birth", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.dateOfBirth, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Your Password *" value="" />*@
+                                    @Html.EditorFor(model => model.salary, new { htmlAttributes = new { @type = "number", @placeholder = "Salary", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.salary, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Confirm Password *" value="" />*@
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @type = "password", @maxlength = "16", @pattern = ".{8,}", @placeholder = "Password", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Your Password *" value="" />*@
+                                    @Html.EditorFor(model => model.address.city, new { htmlAttributes = new { @type = "text", @onkeypress = "return event.charCode>= 65 &&event.charCode<= 90 ||event.charCode>= 97 &&event.charCode<= 122||event.charCode==231||event.charCode==305||event.charCode==287||event.charCode==246||event.charCode==351||event.charCode==252||event.charCode==199||event.charCode==304||event.charCode==214||event.charCode==350||event.charCode==220", @placeholder = "City", @maxlength = "15", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.address.city, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Confirm Password *" value="" />*@
+                                    @Html.EditorFor(model => model.address.district, new { htmlAttributes = new { @type = "text", @onkeypress = "return event.charCode>= 65 &&event.charCode<= 90 ||event.charCode>= 97 &&event.charCode<= 122||event.charCode==231||event.charCode==305||event.charCode==287||event.charCode==246||event.charCode==351||event.charCode==252||event.charCode==199||event.charCode==304||event.charCode==214||event.charCode==350||event.charCode==220", @placeholder = "District", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.address.district, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Your Password *" value="" />*@
+                                    @Html.EditorFor(model => model.address.street, new { htmlAttributes = new { @type = "text", @placeholder = "Street", @maxlength = "20", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.address.street, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @*<input type="text" class="form-control" placeholder="Confirm Password *" value="" />*@
+                                    @Html.EditorFor(model => model.address.no, new { htmlAttributes = new { @onkeypress = "return event.charCode>= 48 &&event.charCode<= 57", @pattern = ".{1,}", @type = "text", @placeholder = "No", @maxlength = "2", @class = "form-control" } })
+                                    @Html.ValidationMessageFor(Model => Model.address.no, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        @*<button type="button" class="btnSubmit">Register</button>*@
+                        <input class="btnSubmit" type="submit" value="Register">
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+</body>
+</html>

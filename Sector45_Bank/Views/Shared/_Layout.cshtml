@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/Content/header.css">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link href="~/Content/Card.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container center-block col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <nav class="[ navbar navbar-fixed-top ][ navbar-bootsnipp animate ]" style="background-color:gainsboro" role="navigation">
+            <div class="[ container ]">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="[ navbar-header ]">
+                    <button type="button" class="[ navbar-toggle ]" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="[ sr-only ]">Toggle navigation</span>
+                        <span class="[ icon-bar ]"></span>
+                        <span class="[ icon-bar ]"></span>
+                        <span class="[ icon-bar ]"></span>
+                    </button>
+                    <div class="[ animbrand ]">
+                        <a class="[ navbar-brand ][ animate ]" id="home" href="#">SECTOR 45</a>
+                    </div>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="[ collapse navbar-collapse ]" id="bs-example-navbar-collapse-1">
+                    <ul class="[ nav navbar-nav navbar-right ]">
+                        <li><a id="operations" class="animate" href="#">Account Operations</a></li>
+                        <li><a id="addAccount" class="animate" href="#">Add Account</a></li>
+                        <li><a class="animate" id="mobilApp" title="Comming Soon" href="https://play.google.com/store?hl=tr">Mobile App</a></li>
+                        <li><a class="animate" id="logOut" href="#">Exit</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    @RenderBody()
+    <footer style="text-align:center;margin-top:100px;background-color:#4285F4">
+        <div class="container-fluid text-center text-md-left">
+            <div class="row">
+                <div class="col-md-4 mt-md-0 mt-3">
+                    <h5>SECTOR 45</h5>
+                    <p>Customer is king</p>
+                </div>
+                <div class="col-md-3 mb-md-0 mb-3">
+                    <h5>Sections</h5>
+                    <ul class="list-unstyled">
+                        <li>Box office attendant:</li>
+                        <li>Box office attendant:</li>
+                        <li>Box office attendant:</li>
+                        <li>Inspector</li>
+                        <li>Bank manager</li>
+                        <li>General manager</li>
+                    </ul>
+                </div>
+                <div class="col-md-5 mb-md-0 mb-3">
+                    <h5>Personnel</h5>
+                    <ul class="list-unstyled">
+                        <li>Cengizhan KOÇAL</li>
+                        <li>Yahya ÖZTÜRK</li>
+                        <li>Furkan UZER</li>
+                        <li>Furkan DOĞU</li>
+                        <li>Mehmet Tuğrul EŞİN</li>
+                        <li>Azer ÇELİKTEN</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright text-center py-3" style="background-color:#0d47a1">@DateTime.Today.ToShortDateString() :Safely from the beginning of thr semester.</div>
+    </footer>
+</body>
+</html>
+<script>
+    $(function () {
+        $("#home").click(function () {
+            window.location="/Membership/Index"
+        });
+        $("#logOut").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Membership/Logout/',
+                success: function () {
+                    window.location = "/User/Index";
+                },
+                error: function myfunction() {
+                    alert("Unable to exit!");
+                }
+            });
+        });
+        $("#addAccount").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Account/add/',
+                success: function () {
+                    window.location = "/Membership/Index";
+                },
+                error: function () {
+                    alert("Failed to create account!");
+                }
+
+            });
+        });
+        $("#operations").click(function () {
+            window.location = "/Account/Operations";
+        });
+    });
+</script>
