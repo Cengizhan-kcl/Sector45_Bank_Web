@@ -14,12 +14,6 @@ namespace Sector45_Bank.Controllers
 {
     public class OperationController : Controller
     {
-        // GET: Operation
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public void Deposit(string no,string amount)
         {
             Operation op = new Operation();
@@ -48,6 +42,13 @@ namespace Sector45_Bank.Controllers
             { return false; }
             return true;
         }
-
+        public void transfer(string no1, string no2,string amount)
+        {
+            Eft eft = new Eft() { amount = Convert.ToDouble(amount), senderAccountId = no1, receiverAccountId = no2 };
+            string body = JsonConvert.SerializeObject(eft);
+            var content = new StringContent(body.ToString(), Encoding.UTF8, "application/json");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            Response<Operation> response = Request<Operation>.PostAsync("http://localhost:3000/transaction/", content);
+        }
     }
 }

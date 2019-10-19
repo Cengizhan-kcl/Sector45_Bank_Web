@@ -41,7 +41,7 @@ namespace Sector45_Bank.Controllers
                     return View("Index");
                 }
                 Tkn.customer = task.data;
-                Response<List<Account>> task2 = Request<List<Account>>.GetAsync("http://localhost:3000/customer/accounts/" + Tkn.customer.customerNo.ToString());
+                Response<List<Account>> task2 = Request<List<Account>>.GetAsync("http://localhost:3000/account/" + Tkn.customer.customerNo.ToString());
                 Tkn.accounts = task2.data;
                 return RedirectToAction("Index", "Membership");
             }
@@ -76,7 +76,7 @@ namespace Sector45_Bank.Controllers
                     ViewBag.message = response.error;
                     return View("Register");
                 }
-                Response<List<Account>> task2 = Request<List<Account>>.GetAsync("http://localhost:3000/customer/accounts/" + Tkn.customer.customerNo.ToString());
+                Response<List<Account>> task2 = Request<List<Account>>.GetAsync("http://localhost:3000/account/" + Tkn.customer.customerNo.ToString());
                 Tkn.accounts = task2.data;
                 Tkn.customer = response.data;
                 return RedirectToAction("Index", "Membership");

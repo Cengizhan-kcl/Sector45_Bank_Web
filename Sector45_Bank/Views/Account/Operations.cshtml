@@ -19,7 +19,7 @@
         }
     </ul>
     <div class="row col-md-9"style="text-align:center">
-        <input id="amount" type="number" maxlength="4" placeholder="Amount" class="" style="height:34px" onkeypress = "return event.charCode>= 48 &&event.charCode<= 57" />
+        <input id="amount" type="text" maxlength="4" placeholder="Amount" class="" style="height:34px" onkeypress = "return event.charCode>= 48 &&event.charCode<= 57" />
         <div class="btn-group" role="group" aria-label="Basic example">
             <button id="Deposit" type="button" class="btn btn-success">Deposit</button>
             <button id="Withdraw" type="button" class="btn btn-warning">Withdraw</button>
@@ -30,7 +30,7 @@
 <script>
     $(function () {
         $(".selectedAccount").click(function () {
-            $(".selectedAccount li").removeClass("active");
+            $("li.selectedAccount").removeClass("active");
             $(this).addClass("active");
         });
 

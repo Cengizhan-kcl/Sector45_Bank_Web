@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
@@ -161,6 +162,9 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Eft.cs" />
+    <Compile Include="Models\Exp.cs" />
+    <Compile Include="Models\ExpResponse.cs" />
     <Compile Include="Models\Operation.cs" />
     <Compile Include="Models\Operations.cs" />
     <Compile Include="Models\Transaction.cs" />
@@ -214,6 +218,8 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Membership\Index.cshtml" />
     <Content Include="Views\Account\Operations.cshtml" />
+    <Content Include="Views\Account\Transfer.cshtml" />
+    <Content Include="Views\Credit\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

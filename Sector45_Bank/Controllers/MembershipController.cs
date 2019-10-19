@@ -20,6 +20,7 @@ namespace Sector45_Bank.Controllers
             Tkn.customer = null;
             Tkn.accounts = null;
             Tkn.operations = null;
+            Tkn.transactions = null;
             ViewBag.message = null;
         }
     }

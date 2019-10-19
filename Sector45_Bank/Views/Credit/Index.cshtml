@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container row " style="text-align:center;margin-top:100px">
+    <input id="account" type="text" maxlength="10" placeholder="Experience Time" class="" style="height:34px" onkeypress="return event.charCode>=48&&event.charCode<=57||event.charCode==46 " />
+    <button id="SendEft" type="button" class="btn btn-success">Send</button>
+</div>
+
+<script>
+    $(function () {
+        $("#SendEft").click(function () {
+            var experience =$("#account").val().trim();
+            $.ajax({
+                type: 'POST',
+                url: '/Credit/Check/',
+                data: { experience: experience },
+                success: function (response) {
+                    if (response != null) {
+                        alert(response);
+                    } else {
+                        alert("Incorrect data entry or service inaccessible");}
+                },
+                error: function () {
+                    alert("Incorrect data entry or service inaccessible");
+                }
+            });
+        });
+    });
+</script>

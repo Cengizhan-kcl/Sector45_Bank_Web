@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <div class="container center-block col-lg-10 col-md-10 col-sm-10 col-xs-10">
+    <div class="container col-lg-10 col-md-10 col-sm-10 col-xs-10" style="text-align:center">
         <nav class="[ navbar navbar-fixed-top ][ navbar-bootsnipp animate ]" style="background-color:gainsboro" role="navigation">
             <div class="[ container ]">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,7 +32,9 @@
                 <div class="[ collapse navbar-collapse ]" id="bs-example-navbar-collapse-1">
                     <ul class="[ nav navbar-nav navbar-right ]">
                         <li><a id="operations" class="animate" href="#">Account Operations</a></li>
+                        <li><a id="transfer" class="animate" href="#">Virman-Eft</a></li>
                         <li><a id="addAccount" class="animate" href="#">Add Account</a></li>
+                        <li><a id="creditCheck" class="animate" href="#">Credit Check</a></li>
                         <li><a class="animate" id="mobilApp" title="Comming Soon" href="https://play.google.com/store?hl=tr">Mobile App</a></li>
                         <li><a class="animate" id="logOut" href="#">Exit</a></li>
                     </ul>
@@ -41,14 +43,14 @@
         </nav>
     </div>
     @RenderBody()
-    <footer style="text-align:center;margin-top:100px;background-color:#4285F4">
+    <footer class="row" style="text-align:center;margin-top:100px;background-color:#4285F4">
         <div class="container-fluid text-center text-md-left">
             <div class="row">
-                <div class="col-md-4 mt-md-0 mt-3">
+                <div class="col-md-4 col-sm-12 col-xs-12">
                     <h5>SECTOR 45</h5>
                     <p>Customer is king</p>
                 </div>
-                <div class="col-md-3 mb-md-0 mb-3">
+                <div class="col-md-3 col-sm-6 col-xs-6">
                     <h5>Sections</h5>
                     <ul class="list-unstyled">
                         <li>Box office attendant:</li>
@@ -59,7 +61,7 @@
                         <li>General manager</li>
                     </ul>
                 </div>
-                <div class="col-md-5 mb-md-0 mb-3">
+                <div class="col-md-5 col-sm-6 col-xs-6">
                     <h5>Personnel</h5>
                     <ul class="list-unstyled">
                         <li>Cengizhan KOÇAL</li>
@@ -108,6 +110,12 @@
         });
         $("#operations").click(function () {
             window.location = "/Account/Operations";
+        });
+        $("#transfer").click(function () {
+            window.location = "/Account/Transfer";
+        });
+        $("#creditCheck").click(function () {
+            window.location = "/Credit/Index";
         });
     });
 </script>

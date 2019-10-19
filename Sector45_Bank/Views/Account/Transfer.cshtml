@@ -1,0 +1,142 @@
+﻿@using Sector45_Bank.Data;
+@using Sector45_Bank.Models;
+@{
+    ViewBag.Title = "Transfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-top:100px">
+    <ul id="no1" class="list-group">
+        @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
+        {
+            foreach (Account item in Tkn.accounts)
+            {
+                if (item.isActive)
+                {
+                    <li class="selectedAccount list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                }
+            }
+        }
+    </ul>
+    <div class="row col-md-12" style="text-align:center;margin-top:10px">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button id="transfer2" type="button" class="btn btn-info">Virman</button>
+            <button id="eft" type="button" class="btn btn-info">Eft</button>
+        </div>
+    </div>
+    <div id="accounttransfer" class="row col-md-12" style="text-align:center;margin-top:10px ">
+        <ul id="no2" class="list-group">
+            @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
+            {
+                foreach (Account item in Tkn.accounts)
+                {
+                    if (item.isActive)
+                    {
+                        <li class="selectedAccount2 list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+    <div id="accounrEft" class="row col-md-12" style="text-align:center;margin-top:10px">
+        <input id="account" type="text" maxlength="10" placeholder="Account No:" class="" style="height:34px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57" />
+    </div>
+    <div class="row col-md-12" style="text-align:center;margin-top:10px">
+        <input id="amount" type="text" maxlength="4" placeholder="Amount" class="" style="height:34px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57" />
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button id="SendTransfer" type="button" class="btn btn-success">Send</button>
+            <button id="SendEft" type="button" class="btn btn-success">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#accounrEft").hide(1);
+        $("#accounttransfer").hide(1);
+        $("#SendEft").hide(1);
+        $("#SendTransfer").hide(1);
+    });
+    $(function () {
+        $("#transfer2").click(function () {
+            $("#accounrEft").hide(1000);
+            $("#SendEft").hide(1);
+            $("#accounttransfer").show(1000);
+            $("#SendTransfer").show(1);
+        });
+        $("#eft").click(function () {
+            $("#accounttransfer").hide(1000);
+            $("#SendTransfer").hide(1);
+            $("#accounrEft").show(1000);
+            $("#SendEft").show(1);
+        });
+        $(".selectedAccount").click(function () {
+            $("li.selectedAccount").removeClass("active");
+            $(this).addClass("active");
+            $("li.selectedAccount2").each(function () {
+                $(this).show(1);
+            });
+            var no = $(this).attr("name");
+            $("li.selectedAccount2").each(function () {
+                if ($(this).attr("name") === no) {
+                    $(this).hide(1);
+                }
+            });
+        });
+        $(".selectedAccount2").click(function () {
+            $("li.selectedAccount2").removeClass("active");
+            $(this).addClass("active");
+        });
+        $("#SendEft").click(function () {
+            var amount = $("#amount").val().trim();
+            var accountNo = $("ul#no1 li.active").attr("name");
+            var accountNo2 = $("#account").val().trim();
+            if (amount != "" && accountNo != null && accountNo2 != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Operation/transfer/',
+                    data: { no1: accountNo, no2: accountNo2, amount: amount },
+                    success: function () {
+                        alert("Eft made");
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Account/account',
+                            success: function () {
+                                window.location = "/Membership/Index/";
+                            }
+                        });
+                    },
+                    error: function () { }
+                });
+            } else {
+                alert("Select and fill in the required fields");
+            }
+            
+        });
+        $("#SendTransfer").click(function () {
+            var amount = $("#amount").val().trim();
+            var accountNo = $("ul#no1 li.active").attr("name");
+            var accountNo2 = $("ul#no2 li.active").attr("name");
+            if (amount != "" && accountNo != null && accountNo2 != null) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Operation/transfer/',
+                    data: { no1: accountNo, no2: accountNo2, amount: amount },
+                    success: function () {
+                        alert("Virman made");
+                        $.ajax({
+                            type: 'GET',
+                            url: '/Account/account',
+                            success: function () {
+                                window.location = "/Membership/Index/";
+                            }
+                        });},
+                    error: function () { }
+                });
+            } else {
+                alert("Select and fill in the required fields");
+            }
+
+        });
+    });
+</script>

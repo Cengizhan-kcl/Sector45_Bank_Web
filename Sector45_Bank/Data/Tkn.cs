@@ -11,5 +11,6 @@ namespace Sector45_Bank.Data
        public static Customer customer;
         public static List<Account> accounts;
         public static List<Operation> operations;
+        public static List<Transaction> transactions;
     }
 }
