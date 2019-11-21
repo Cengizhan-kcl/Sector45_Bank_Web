@@ -7,6 +7,6 @@ namespace Sector45_Bank.Models
 {
     public class ExpResponse
     {
-        public string Salary { get; set; }
+        public string CrediState { get; set; }
     }
 }

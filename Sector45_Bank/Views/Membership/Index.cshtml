@@ -7,11 +7,12 @@
 
 
 
-
-<div class="container" style="margin-top:100px">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="my-carousel" class="carousel slide" data-ride="carousel">
+<div>
+    
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10" style="margin-top:50px;margin-bottom:250px; background-color:orange ;border-radius:4px;box-shadow:2px 2px 6px #000">
+        <div class="row">
+            <div id="my-carousel" class="carousel slide col-xs-12" data-ride="carousel">
                 <div class="carousel-inner" role="listbox">
                     @if (Tkn.accounts != null)
                     {
@@ -27,7 +28,7 @@
                                 <div id="@account.accountNo" class="card-container centermx drop-shadow lifted item active">
                                     <div class="card">
                                         <div class="card-header ">
-                                            <p align="center">@account.accountNo</p><span name="@account.accountNo" class="delete glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                            <p align="center">Account no:@account.accountNo/ /Code:@account.code</p><span name="@account.accountNo" class="delete glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </div>
                                         <div class="card-body">
                                             <p>Balance</p><hr />
@@ -44,7 +45,7 @@
                                 <div id="@account.accountNo" class="card-container centermx drop-shadow lifted item">
                                     <div class="card">
                                         <div class="card-header ">
-                                            <p align="center">@account.accountNo</p><span name="@account.accountNo" class="delete glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                            <p align="center">@account.accountNo</p><span name="@account.accountNo" class="delete glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </div>
                                         <div class="card-body">
                                             <p>Balance</p><hr />
@@ -59,9 +60,7 @@
                             i++;
                         }
                     }
-
                 </div>
-
                 <a class="left carousel-control" href="#my-carousel" role="button" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -72,94 +71,110 @@
                 </a>
             </div>
         </div>
+        <div class="col-xs-12" style="background-color:orange">
+            <div class="col-xs-1"></div>
+            <div class="col-xs-10" style="background-color:white;margin-bottom:10px;margin-top:10px;border-radius:10px">
+
+                @if (Tkn.operations != null)
+                {
+                    <p class="col-xs-12 text-center">Transaction History</p>
+                    if (Tkn.operations.Count != 0)
+                    {
+                        <table id="table" class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Is Deposit</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Platform</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Operation item in Tkn.operations)
+                                {
+                                    <tr>
+                                        <th scope="row">-</th>
+                                        <td>Amount:@item.amount.ToString()</td>
+                                        <td>Date:@item.date.ToShortDateString()</td>
+                                        @if (item.isDeposit)
+                                        {
+                                            <td>Deposit</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Withdrawal</td>
+                                        }
+                                        <td>@item.description.ToString()</td>
+                                        <td>@item.source.ToString()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    { <p>No records found for the selected account!</p>}
+
+                }
+                @if (Tkn.transactions != null)
+                {
+                    if (Tkn.transactions.Count != 0)
+                    {
+                        <table id="table" class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Is Local</th>
+                                    <th scope="col">Other Account</th>
+                                    <th scope="col">Platform</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Transaction item in Tkn.transactions)
+                                {
+                                    <tr>
+                                        <th scope="row">-</th>
+                                        <td>Amount:@item.amount.ToString()</td>
+                                        <td>Date:@item.date.ToShortDateString()</td>
+                                        @if (item.isLocal)
+                                        {
+                                            <td>Virman</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Eft</td>
+                                        }
+                                        @if (item.senderAccount != null)
+                                        {
+                                            <td>Sender: @item.senderAccount.accountNo.ToString()</td>
+                                        }
+                                        else
+                                        {
+                                            <td>Receiver: @item.receiverAccount.accountNo.ToString()</td>
+                                        }
+                                        <td>@item.source</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    { <p>No transfer records found for the selected account!</p>}
+
+                }
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </div>
+    <div class="col-xs-1">
     </div>
 </div>
-@if (Tkn.operations != null)
-{
-    if (Tkn.operations.Count != 0)
-    {
-        <table id="table" class="table table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Operations</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Operation item in Tkn.operations)
-                {
-                    <tr>
-                        <th scope="row">-</th>
-                        <td>Amount:@item.amount.ToString()</td>
-                        <td>Date:@item.date.ToShortDateString()</td>
-                        @if (item.isDeposit)
-                        {
-                            <td>Deposit</td>
-                        }
-                        else
-                        {
-                            <td>Withdrawal</td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    { <p style="text-align:center">No records found for the selected account!</p>}
-
-}
-@if (Tkn.transactions != null)
-{
-    if (Tkn.transactions.Count != 0)
-    {
-        <table id="table" class="table table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">TRansactions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Transaction item in Tkn.transactions)
-                {
-                <tr>
-                    <th scope="row">-</th>
-                    <td>Amount:@item.amount.ToString()</td>
-                    <td>Date:@item.date.ToShortDateString()</td>
-                    @if (item.isLocal)
-                    {
-                        <td>Virman</td>
-                    }
-                    else
-                    {
-                        <td>Eft</td>
-                    }
-                    @if (item.senderAccount != null)
-                    {
-                        <td>Sender:</td>
-                        <td>@item.senderAccount.accountNo.ToString()</td>
-                    }
-                    else
-                    {
-                        <td>Receiver</td>
-                        <td>@item.receiverAccount.accountNo.ToString()</td>
-                    }
-
-                </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    { <p style="text-align:center">No records found for the selected account!</p>}
-
-}
-
-
-
 <script>
     $(function () {
+        
         $(".delete").click(function () {
             if (@Tkn.accounts.Count> 1) {
                 var result = window.confirm("Do you approve the deletion of the account?");
@@ -169,41 +184,57 @@
                         url: '/Account/remove/',
                         data: { no: this.getAttribute("name") },
                         success: function (response) {
-                            if (response == true) {
+                            if (JSON.parse(response).status) {
                                 $.ajax({
                                     type: 'GET',
                                     url: '/Account/account',
                                     success: function () {
-                                        window.location = "/Membership/Index/";
+                                        silalert(winlocation);
                                     }
                                 });
                             }
                             else {
-                                alert("Failed to deletion account!");
+                                alertify.error("Account deletion failed!");
                             }
                         },
                         error: function () {
-                            alert("Failed to deletion account!");
+                            alertify.error("Account deletion failed!");
                         }
                     });
-                } else {
-
                 }
             }
+            else { alertify.error("The deletion cannot be done because you do not have any other accounts to use!"); }
         });
     });
+    
+     
     $(".accTran").click(function () {
         var cardNo = this.getAttribute("name");
         $.ajax({
             type: 'POST',
             url: '/Account/transaction/',
             data: { no: cardNo },
-            success: function () {
-                window.location = "http://localhost:62533/Membership";
+            success: function (res) {
+                if (JSON.parse(res).status) {
+                    trsGet(winlocation);
+                } else {
+                    alertify.error("No transaction history found!");
+                }
             },
             error: function () {
-                alert("Can't get dashboard");
+                alertify.error("No transaction history found!");
             }
         });
     });
+   
+    function silalert(callback) {
+        setTimeout(() => { alertify.success("Account deletion successful!"); callback(); }, 1);
+    }
+
+    function trsGet(callback) {
+        setTimeout(() => { alertify.success("Transaction history found!"); callback(); }, 1);
+    }
+    function winlocation() {
+        setTimeout(() => { window.location = "/Membership/Index/"; }, 3000);
+    }
 </script>

@@ -21,6 +21,8 @@ namespace Sector45_Bank.Controllers
             Tkn.accounts = null;
             Tkn.operations = null;
             Tkn.transactions = null;
+            Tkn.hgsCards = null;
+            Tkn.hgsOperations = null;
             ViewBag.message = null;
         }
     }

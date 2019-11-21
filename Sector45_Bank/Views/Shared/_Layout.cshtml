@@ -10,11 +10,14 @@
     <link href="~/Content/Card.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet">
+    <script src="~/Scripts/alertify.js"></script>
+    <link href="~/Content/alertifyjs/alertify.css" rel="stylesheet" />
+    <link href="~/Content/alertifyjs/themes/default.css" rel="stylesheet" />
 
 </head>
-<body>
-    <div class="container col-lg-10 col-md-10 col-sm-10 col-xs-10" style="text-align:center">
-        <nav class="[ navbar navbar-fixed-top ][ navbar-bootsnipp animate ]" style="background-color:gainsboro" role="navigation">
+<body style="background-color:white">
+    <div class="container-fluid col-xs-12">
+        <nav class="[ navbar ][ navbar-bootsnipp animate ]" style="background-color:orange" role="navigation">
             <div class="[ container ]">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="[ navbar-header ]">
@@ -32,8 +35,9 @@
                 <div class="[ collapse navbar-collapse ]" id="bs-example-navbar-collapse-1">
                     <ul class="[ nav navbar-nav navbar-right ]">
                         <li><a id="operations" class="animate" href="#">Account Operations</a></li>
-                        <li><a id="transfer" class="animate" href="#">Virman-Eft</a></li>
+                        <li><a id="transfer" class="animate" href="#">Virman-Havale</a></li>
                         <li><a id="addAccount" class="animate" href="#">Add Account</a></li>
+                        <li><a id="hgsOperations" class="animate" href="#">HGS Operations</a></li>
                         <li><a id="creditCheck" class="animate" href="#">Credit Check</a></li>
                         <li><a class="animate" id="mobilApp" title="Comming Soon" href="https://play.google.com/store?hl=tr">Mobile App</a></li>
                         <li><a class="animate" id="logOut" href="#">Exit</a></li>
@@ -43,7 +47,7 @@
         </nav>
     </div>
     @RenderBody()
-    <footer class="row" style="text-align:center;margin-top:100px;background-color:#4285F4">
+    <footer class="row navbar-fixed-bottom" style="text-align:center;margin-top:100px;background-color:orange;color:#337ab7;margin-left:15px;margin-right:15px;border-radius:4px;font-size:10px">
         <div class="container-fluid text-center text-md-left">
             <div class="row">
                 <div class="col-md-4 col-sm-12 col-xs-12">
@@ -72,9 +76,9 @@
                         <li>Azer ÇELİKTEN</li>
                     </ul>
                 </div>
+                <div class="footer-copyright text-center py-3 " style="border:2px">@DateTime.Today.ToShortDateString() :Safely from the beginning of the semester.</div>
             </div>
-        </div>
-        <div class="footer-copyright text-center py-3" style="background-color:#0d47a1">@DateTime.Today.ToShortDateString() :Safely from the beginning of thr semester.</div>
+        </div>    
     </footer>
 </body>
 </html>
@@ -91,7 +95,7 @@
                     window.location = "/User/Index";
                 },
                 error: function myfunction() {
-                    alert("Unable to exit!");
+                    alertify.error("Unable to exit!");
                 }
             });
         });
@@ -99,11 +103,15 @@
             $.ajax({
                 type: 'GET',
                 url: '/Account/add/',
-                success: function () {
-                    window.location = "/Membership/Index";
+                success: function (res) {
+                    if (JSON.parse(res).status) {
+                        addacc(winlocatin5);
+                    } else {
+                        alertify.error("Failed to create account!");
+                    }
                 },
                 error: function () {
-                    alert("Failed to create account!");
+                    alertify.error("Failed to create account!");
                 }
 
             });
@@ -114,8 +122,31 @@
         $("#transfer").click(function () {
             window.location = "/Account/Transfer";
         });
+        $("#hgsOperations").click(function () {
+            $.ajax({
+                type: 'GET',
+                url: '/Hgs/cards/',
+                success: function (res) {
+                    if (JSON.parse(res).status) {
+                        window.location = "/Hgs/Index";
+                    } else {
+                        window.location = "/Hgs/Index";
+                    }
+                },
+                error: function () {
+                    alertify.error("Unable to access HGS transactions!");
+                }
+            });
+        });
         $("#creditCheck").click(function () {
             window.location = "/Credit/Index";
         });
+        function addacc(callback) {
+            setTimeout(() => { alertify.success("Account creation successful"); callback(); }, 1);
+        }
+        function winlocatin5() {
+            setTimeout(() => { window.location = "/Membership/Index"; }, 3000);
+        }
     });
+    
 </script>

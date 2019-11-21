@@ -4,29 +4,66 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container row " style="text-align:center;margin-top:100px">
-    <input id="account" type="text" maxlength="10" placeholder="Experience Time" class="" style="height:34px" onkeypress="return event.charCode>=48&&event.charCode<=57||event.charCode==46 " />
-    <button id="SendEft" type="button" class="btn btn-success">Send</button>
+<div class="col-xs-12">
+    <div class="container" style="text-align:center;margin-top:50px">
+        <div class="col-xs-4"></div>
+        <div class="col-xs-4" style="background-color:orange ;border-radius:4px;box-shadow:2px 2px 6px #000;padding-top:10px;padding-bottom:10px">
+            <input id="Credit" type="text" maxlength="10" placeholder="Credit" class="col-xs-12" style="height:34px;margin-bottom:10px" onkeypress="return event.charCode>=48&&event.charCode<=57" />
+            <input id="Age" type="text" maxlength="3" placeholder="Age" class="col-xs-12" style="height:34px;margin-bottom:10px" onkeypress="return event.charCode>=48&&event.charCode<=57" />
+            <input id="CreditCount" type="text" maxlength="2" placeholder="Credit Count" class="col-xs-12" style="height:34px;margin-bottom:10px" onkeypress="return event.charCode>=48&&event.charCode<=57" />
+            <div class="input-group"style="margin-bottom:10px">
+                <span class="input-group-addon">
+                    <input id="homestate" type="checkbox" aria-label="...">
+                </span>
+                <div  class="alert alert-info" role="alert" style="margin-bottom:0px">Home</div>
+            </div>
+            <div class="input-group"style="margin-bottom:10px">
+                <span class="input-group-addon">
+                    <input id="phonestate" type="checkbox" aria-label="...">
+                </span>
+                <div class="alert alert-info" role="alert"style="margin-bottom:0px">Phone</div>
+            </div>
+            <button id="SendEft" type="button" class="btn btn-success col-xs-12">Send</button>
+        </div>
+        <div class="col-xs-4">
+            <img id="succussIcon" style="" src="https://res.cloudinary.com/manisa/image/upload/v1573006743/samples/successful-icon-9_rnvcvg.png" class="col-xs-12" hidden/>
+            <img id="failIcon" src="https://res.cloudinary.com/manisa/image/upload/v1573037569/samples/youtube-dislike-vector-png-19_qtsjrc.png" class="col-xs-12" hidden/>
+        </div>
+    </div>
 </div>
 
 <script>
     $(function () {
+        $("#succussIcon").hide(1);
         $("#SendEft").click(function () {
-            var experience =$("#account").val().trim();
-            $.ajax({
-                type: 'POST',
-                url: '/Credit/Check/',
-                data: { experience: experience },
-                success: function (response) {
-                    if (response != null) {
-                        alert(response);
-                    } else {
-                        alert("Incorrect data entry or service inaccessible");}
-                },
-                error: function () {
-                    alert("Incorrect data entry or service inaccessible");
-                }
-            });
+            var Credit = $("#Credit").val().trim();
+            var Age = $("#Age").val().trim();
+            var CreditCount = $("#CreditCount").val().trim();
+            var HomeState = document.getElementById('homestate').checked;
+            var PhoneState = document.getElementById('phonestate').checked;
+            if (Credit !== "" && Age !== "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Credit/Check/',
+                    data: { Credit: Credit, Age: Age, CreditCount: CreditCount, HomeState: HomeState, PhoneState: PhoneState },
+                    success: function (response) {
+                        console.log(JSON.parse(response).status)
+                        if (JSON.parse(response).status) {
+                            $("#succussIcon").show(1000).delay(3000).hide(1000);
+                        } else {
+                            $("#failIcon").show(1000).delay(3000).hide(1000);
+                        }
+                    },
+                    error: function () {
+                        $("#succussIcon").hide(1);
+                        alertify.error("Incorrect data entry or service inaccessible");
+                    }
+                });
+            } else {
+                $("#succussIcon").hide(1);
+                alertify.error("Do not leave credit and age fields blank");
+            }
+                
         });
     });
 </script>

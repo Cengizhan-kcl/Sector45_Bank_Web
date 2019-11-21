@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
+    <Compile Include="Controllers\HgsController.cs" />
     <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
@@ -161,18 +162,38 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Body.cs" />
+    <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Eft.cs" />
     <Compile Include="Models\Exp.cs" />
     <Compile Include="Models\ExpResponse.cs" />
     <Compile Include="Models\Operation.cs" />
+    <Compile Include="Models\OperationHgs.cs" />
     <Compile Include="Models\Operations.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="utils\Request.cs" />
     <Compile Include="utils\Response.cs" />
+    <Compile Include="utils\ReturnType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alertifyjs\alertify.css" />
+    <Content Include="Content\alertifyjs\alertify.min.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.css" />
+    <Content Include="Content\alertifyjs\alertify.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.min.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\bootstrap.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.css" />
+    <Content Include="Content\alertifyjs\themes\default.min.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\default.rtl.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.min.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.css" />
+    <Content Include="Content\alertifyjs\themes\semantic.rtl.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -186,6 +207,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\alertify.js" />
+    <Content Include="Scripts\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -220,6 +243,7 @@
     <Content Include="Views\Account\Operations.cshtml" />
     <Content Include="Views\Account\Transfer.cshtml" />
     <Content Include="Views\Credit\Index.cshtml" />
+    <Content Include="Views\Hgs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,8 +7,9 @@ namespace Sector45_Bank.Models
 {
     public class Operations
     {
-        public int amount{ get; set; }
+        public double amount{ get; set; }
         public bool isDeposit{ get; set; }
         public string accountNo{ get; set; }
+        public string source = "WEB";
     }
 }

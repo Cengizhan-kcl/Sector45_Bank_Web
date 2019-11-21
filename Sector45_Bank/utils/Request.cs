@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
+using Sector45_Bank.Models;
 
 namespace Sector45_Bank
 {

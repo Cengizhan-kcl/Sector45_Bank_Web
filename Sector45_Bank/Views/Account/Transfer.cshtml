@@ -5,48 +5,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style="margin-top:100px">
-    <ul id="no1" class="list-group">
-        @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
-        {
-            foreach (Account item in Tkn.accounts)
-            {
-                if (item.isActive)
-                {
-                    <li class="selectedAccount list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
-                }
-            }
-        }
-    </ul>
-    <div class="row col-md-12" style="text-align:center;margin-top:10px">
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button id="transfer2" type="button" class="btn btn-info">Virman</button>
-            <button id="eft" type="button" class="btn btn-info">Eft</button>
-        </div>
-    </div>
-    <div id="accounttransfer" class="row col-md-12" style="text-align:center;margin-top:10px ">
-        <ul id="no2" class="list-group">
-            @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
-            {
-                foreach (Account item in Tkn.accounts)
-                {
-                    if (item.isActive)
+<div class="container row col-xs-12" style="margin-top:50px;margin-bottom:50px">
+    <div class="row">
+        <div class="col-xs-3"></div>
+        <div class="col-xs-6" style="background-color:orange ;border-radius:4px;box-shadow:2px 2px 6px #000">
+            <div class="row navbar-bootsnipp animate" style="text-align:center">
+                <a id="transfer2" class="col-xs-6 animate" type="button" href="#" style="background-color:white;height:40px;padding-top:10px;border:2px solid lightblue">Virman</a>
+                <a id="eft" class="col-xs-6 animate" type="button" href="#" style="background-color:white;height:40px;padding-top:10px;border:2px solid lightBlue">Havale</a>
+            </div>
+            <div style="margin-top:10px">
+                <ul id="no1" class="list-group">
+                    @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
                     {
-                        <li class="selectedAccount2 list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                        foreach (Account item in Tkn.accounts)
+                        {
+                            if (item.isActive)
+                            {
+                                <li class="selectedAccount list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                            }
+                        }
                     }
-                }
-            }
-        </ul>
-    </div>
-    <div id="accounrEft" class="row col-md-12" style="text-align:center;margin-top:10px">
-        <input id="account" type="text" maxlength="10" placeholder="Account No:" class="" style="height:34px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57" />
-    </div>
-    <div class="row col-md-12" style="text-align:center;margin-top:10px">
-        <input id="amount" type="text" maxlength="4" placeholder="Amount" class="" style="height:34px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57" />
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button id="SendTransfer" type="button" class="btn btn-success">Send</button>
-            <button id="SendEft" type="button" class="btn btn-success">Send</button>
+                </ul>
+            </div><hr />
+            <div id="accounttransfer" style="margin-top:10px ">
+                <ul id="no2" class="list-group">
+                    @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
+                    {
+                        foreach (Account item in Tkn.accounts)
+                        {
+                            if (item.isActive)
+                            {
+                                <li class="selectedAccount2 list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6">
+                    <div id="accounrEft" style="margin-top:10px">
+                        <input id="account" type="text" maxlength="10" placeholder="Account No:" class="col-xs-12" style="height:34px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57" />
+                    </div>
+                    <div style="margin-top:10px">
+                        <input id="amount" type="text" maxlength="10" placeholder="Amount" class="col-xs-12" style="height:34px;margin-bottom:10px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57||event.charCode==44" />
+                        <button id="SendTransfer" type="button" style="margin-bottom:10px" class="btn btn-success col-xs-12">Send</button>
+                        <button id="SendEft" type="button" style="margin-bottom:10px" class="btn btn-success col-xs-12">Send</button>
+                    </div><hr />
+                    <div style="color:#721c24">
+                        <p>* Select the type of action you want to perform</p>
+                        <p>* Select or enter accounts to process</p>
+                        <p>* Enter transaction amount</p>
+                    </div>
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
         </div>
+        <div class="col-xs-3"></div>
     </div>
 </div>
 
@@ -59,15 +74,15 @@
     });
     $(function () {
         $("#transfer2").click(function () {
-            $("#accounrEft").hide(1000);
+            $("#accounrEft").hide(1);
             $("#SendEft").hide(1);
-            $("#accounttransfer").show(1000);
+            $("#accounttransfer").show(1);
             $("#SendTransfer").show(1);
         });
         $("#eft").click(function () {
-            $("#accounttransfer").hide(1000);
+            $("#accounttransfer").hide(1);
             $("#SendTransfer").hide(1);
-            $("#accounrEft").show(1000);
+            $("#accounrEft").show(1);
             $("#SendEft").show(1);
         });
         $(".selectedAccount").click(function () {
@@ -91,25 +106,28 @@
             var amount = $("#amount").val().trim();
             var accountNo = $("ul#no1 li.active").attr("name");
             var accountNo2 = $("#account").val().trim();
-            if (amount != "" && accountNo != null && accountNo2 != "") {
+            if (amount !== "" && accountNo !== null && accountNo2 != "") {
                 $.ajax({
                     type: 'POST',
                     url: '/Operation/transfer/',
                     data: { no1: accountNo, no2: accountNo2, amount: amount },
-                    success: function () {
-                        alert("Eft made");
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Account/account',
-                            success: function () {
-                                window.location = "/Membership/Index/";
-                            }
-                        });
+                    success: function (res4) {
+                        if (JSON.parse(res4).status) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Account/account',
+                                success: function () {
+                                    havale(winlocation4);
+                                }
+                            });
+                        } else {
+                            alertify.error("Havale not made");
+                        }
                     },
-                    error: function () { }
+                    error: function () {alertify.error("Havale not made"); }
                 });
             } else {
-                alert("Select and fill in the required fields");
+                alertify.error("Select and fill in the required fields");
             }
             
         });
@@ -117,26 +135,39 @@
             var amount = $("#amount").val().trim();
             var accountNo = $("ul#no1 li.active").attr("name");
             var accountNo2 = $("ul#no2 li.active").attr("name");
-            if (amount != "" && accountNo != null && accountNo2 != null) {
+            if (amount !== "" && accountNo !== null && accountNo2 !== null) {
                 $.ajax({
                     type: 'POST',
                     url: '/Operation/transfer/',
                     data: { no1: accountNo, no2: accountNo2, amount: amount },
-                    success: function () {
-                        alert("Virman made");
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Account/account',
-                            success: function () {
-                                window.location = "/Membership/Index/";
-                            }
-                        });},
-                    error: function () { }
+                    success: function (res) {
+                        if (JSON.parse(res).status) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Account/account',
+                                success: function () {
+                                    virman(winlocation4);
+                                }
+                            });
+                        } else {
+                            alertify.error("Virman not made");
+                        }
+                        },
+                    error: function () { alertify.error("Virman not made"); }
                 });
             } else {
-                alert("Select and fill in the required fields");
+                alertify.error("Select and fill in the required fields");
             }
 
         });
     });
+    function virman(callback) {
+        setTimeout(() => { alertify.success("Virman made"); callback(); }, 1);
+    }
+    function havale(callback) {
+        setTimeout(() => { alertify.success("Havale made"); callback(); }, 1);
+    }
+    function winlocation4() {
+        setTimeout(() => { window.location = "/Membership/Index/"; },3000);
+    }
 </script>

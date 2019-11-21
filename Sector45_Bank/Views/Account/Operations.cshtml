@@ -1,88 +1,148 @@
 ﻿@using Sector45_Bank.Data;
 @using Sector45_Bank.Models;
+
 @{
     ViewBag.Title = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="container" style="margin-top:100px">
-    <ul class="list-group">
-        @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
-        {
-            foreach (Account item in Tkn.accounts)
-            {
-                if (item.isActive)
-                {
-                    <li class="selectedAccount list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
-                }
-            }
-        }
-    </ul>
-    <div class="row col-md-9"style="text-align:center">
-        <input id="amount" type="text" maxlength="4" placeholder="Amount" class="" style="height:34px" onkeypress = "return event.charCode>= 48 &&event.charCode<= 57" />
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button id="Deposit" type="button" class="btn btn-success">Deposit</button>
-            <button id="Withdraw" type="button" class="btn btn-warning">Withdraw</button>
+<div class="container row col-xs-12" style="margin-bottom:50px;margin-top:50px">
+    <div class="row">
+        <div class="col-xs-3"></div>
+        <div class=" col-xs-6" style="background-color:orange ;border-radius:4px;box-shadow:2px 2px 6px #000">
+            <div class="row navbar-bootsnipp animate" style="text-align:center">
+                <a id="selectDeposit" class="col-xs-6 animate" type="button" href="#" style="background-color:white;height:40px;padding-top:10px;border:2px solid lightblue">Deposit</a>
+                <a id="selectWithdraw" class="col-xs-6 animate" type="button" href="#" style="background-color:white;height:40px;padding-top:10px;border:2px solid lightBlue">Withdraw</a>
+            </div>
+            <div style="margin-top:10px">
+                <ul class="list-group">
+                    @if (Tkn.accounts != null && Tkn.accounts.Count != 0)
+                    {
+                        foreach (Account item in Tkn.accounts)
+                        {
+                            if (item.isActive)
+                            {
+                                <li class="selectedAccount list-group-item " name="@item.accountNo" style="text-align:center">Account No:@item.accountNo ; Balance:@item.balance.ToString()</li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+            <div>
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6" style="">
+                    <input id="amount" type="text" maxlength="10" placeholder="Amount" class="col-xs-12" style="margin-bottom:10px;height:34px;border-radius:4px" onkeypress="return event.charCode>= 48 &&event.charCode<= 57||event.charCode==44" />
+                    <button id="Deposit" type="button" style="margin-bottom:10px" class="btn btn-success col-xs-12">Deposit</button>
+                    <button id="Withdraw" type="button" style="margin-bottom:10px" class="btn btn-success col-xs-12">Withdraw</button>
+                    <hr />
+                    <div style="color:#721c24">
+                        <p>* Select the type of action you want to perform</p>
+                        <p>* Select account to process</p>
+                        <p>* Enter transaction amount</p>
+                    </div>
+                </div>
+                <div class="col-xs-3"></div>
+            </div>
         </div>
+        <div class="col-xs-3"></div>
     </div>
+    
 </div>
-
 <script>
     $(function () {
+        $("#Deposit").hide(1);
+        $("#Withdraw").hide(1);
+        $("#selectDeposit").click(function () {
+            $("#Deposit").show(1);
+            $("#Withdraw").hide(1);
+        });
+        $("#selectWithdraw").click(function () {
+            $("#Deposit").hide(1);
+            $("#Withdraw").show(1);
+        });
         $(".selectedAccount").click(function () {
             $("li.selectedAccount").removeClass("active");
             $(this).addClass("active");
         });
 
         $("#Deposit").click(function () {
-            var amount = $("#amount").val();
+            var amount = $("#amount").val().trim();
             var accountNo = $(".active").attr("name");
-            if (accountNo != null && amount!=null) {
+            console.log($(".active"));
+            if (accountNo !== null && amount !== "") {
                 $.ajax({
                     type: 'POST',
                     url: '/Operation/Deposit/',
                     data: { no: accountNo, amount: amount },
-                    success: function () {
-                        alert("Deposit made");
-                        $.ajax({
-                            type: 'GET',
-                            url: '/Account/account',
-                            success: function () {
-                                window.location = "/Membership/Index/";
-                            }
-                        });
-                    }
+                    success: function (res) {
+                        if (JSON.parse(res).status) {
+                            $.ajax({
+                                type: 'GET',
+                                url: '/Account/account',
+                                success: function (res) {
+                                    if (JSON.parse(res).status) {
+                                        deposit(winlocation2);
+                                    } else {
+                                        alertify.error("Deposit not made");
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            alertify.error("Deposit not made");
+                        }
+                    },
+                    error: function () { alertify.error("Deposit not made");}
                 });
             }
-            
+            else {
+                alertify.error("Blank data or unselected account");
+            }
+
         });
         $("#Withdraw").click(function () {
-            var amount = $("#amount").val();
+            var amount = $("#amount").val().trim();
             var accountNo = $(".active").attr("name");
-            if (amount)
-            if (accountNo != null && amount != null) {
+            if (accountNo !== null && amount !== "") {
                 $.ajax({
                     type: 'POST',
                     url: '/Operation/Withdraw/',
                     data: { no: accountNo, amount: amount },
                     success: function (response) {
-                        if (response) {
-                            alert("Withdraw made");
+                        console.log(JSON.parse(response).status)
+                        if (JSON.parse(response).status) {
                             $.ajax({
                                 type: 'GET',
                                 url: '/Account/account',
-                                success: function () {
-                                    window.location = "/Membership/Index/";
+                                success: function (res) {
+                                    if (JSON.parse(res).status) {
+                                        withdraw(winlocation2);
+                                    } else {
+                                        alertify.error("Withdraw failed");
+                                    }
                                 }
                             });
                         }
                         else {
-                            alert("Withdraw failed")
+                            alertify.error("Withdraw failed");
                         }
-                    }
+                    },
+                    error: function () { alertify.error("Withdraw failed"); }
                 });
-                
+
+            }
+            else {
+                alertify.error("Blank data or unselected account");
             }
         });
-    }); 
+        function deposit(callback) {
+            setTimeout(() => { alertify.success("Deposit made"); callback(); }, 1);
+        }
+        function withdraw(callback) {
+            setTimeout(() => { alertify.success("Withdraw made"); callback(); }, 1);
+        }
+        function winlocation2() {
+            setTimeout(() => { window.location = "/Membership/Index/"; }, 3000);
+        }
+        
+    });
 </script>

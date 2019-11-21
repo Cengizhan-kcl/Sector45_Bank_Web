@@ -47,8 +47,7 @@ namespace Sector45_Bank.Controllers
             }
             catch (Exception e)
             {
-                string[] subString = e.Message.Split('"');
-                ViewBag.message = subString[1];
+                ViewBag.message = e.Message.ToString();
                 return View("Index");
             }
         }
@@ -62,6 +61,7 @@ namespace Sector45_Bank.Controllers
         [HttpPost]
         public ActionResult Register(Customer customer)
         {
+            customer.salary = 2000;
             string obj = JsonConvert.SerializeObject(customer);
             
             var url = "http://localhost:3000/customer/register";
@@ -76,15 +76,14 @@ namespace Sector45_Bank.Controllers
                     ViewBag.message = response.error;
                     return View("Register");
                 }
+                Tkn.customer = response.data;
                 Response<List<Account>> task2 = Request<List<Account>>.GetAsync("http://localhost:3000/account/" + Tkn.customer.customerNo.ToString());
                 Tkn.accounts = task2.data;
-                Tkn.customer = response.data;
                 return RedirectToAction("Index", "Membership");
             }
             catch (Exception e)
             {
-                string[] subString = e.Message.Split('"');
-                ViewBag.message = subString[1];
+                ViewBag.message = e.Message.ToString();
                 return View("Register");
             }
         }
